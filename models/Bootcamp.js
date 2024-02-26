@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const geoCoder = require("./../utils/geoCode");
 
-const pointSchema = new mongoose.Schema({
-
-});
-
 const BootcampSchema = new mongoose.Schema({
     name: {
         type: String,
