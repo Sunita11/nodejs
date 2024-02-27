@@ -4,9 +4,14 @@ const router = express.Router({
 });
 
 const {
-    getAllCourses
+    getAllCourses,
+    getCourse,
+    addCourse,
+    updateCourse,
+    deleteCourse
 } = require("./../controllers/courses");
 
-router.route("/").get(getAllCourses);
+router.route("/").get(getAllCourses).post(addCourse);
+router.route("/:id").get(getCourse).put(updateCourse).delete(deleteCourse);
 
 module.exports = router;
