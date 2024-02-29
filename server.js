@@ -9,6 +9,7 @@ connectDB();
 // bootcamp routes
 const bootcampRoutes = require("./routes/bootcamp");
 const coursesRoutes = require("./routes/course");
+const authRoutes = require("./routes/auth");
 const errorHandler = require("./middleware/errorHandler");
 
 
@@ -26,6 +27,7 @@ if(process.env.NODE_ENV === "development") {
 
 app.use("/api/v1/bootcamps", bootcampRoutes);
 app.use("/api/v1/courses", coursesRoutes);
+app.use("/api/v1/auth", authRoutes);
 // Error handler middleware
 app.use(errorHandler);
 
