@@ -2,7 +2,7 @@ const express = require("express");
 const multer  = require('multer');
 const Bootcamp = require("./../models/Bootcamp");
 const advancedResults = require("./../middleware/advancedResults");
-const { protect } = require("./../middleware/auth");
+const { authorize, protect } = require("./../middleware/auth");
 
 
 // Set multer file storage folder
@@ -41,11 +41,13 @@ const router = express.Router();
 
 router.use("/:bootcampId/courses", courseRouter);
 
-router.route("/").get(advancedResults(Bootcamp, "courses"), getAllBootcamps).post(protect, createBootcamp);
+router.route("/").get(advancedResults(Bootcamp, "courses"), getAllBootcamps).post(protect, authorize(["publisher", "admin"]), createBootcamp);
 
-router.route("/:id").get(getBootcamp).put(protect, updateBootcamp).delete(protect, deleteBootcamp);
+router.route("/:id").get(getBootcamp)
+.put(protect, authorize(["publisher", "admin"]), updateBootcamp)
+.delete(protect, authorize(["publisher", "admin"]), deleteBootcamp);
 
-router.route("/:id/photo").put(upload.single("file"), bootcampPhotoUpload);
+router.route("/:id/photo").put(upload.single("file"), protect, authorize(["publisher", "admin"]), bootcampPhotoUpload);
 
 router.route("/radius/:zipcode/:distance").get(getBootcampInRadius)
 
