@@ -5,6 +5,7 @@ const router = express.Router({
 
 const Course = require("./../models/Course");
 const advancedResults = require("./../middleware/advancedResults");
+const { protect } = require("./../middleware/auth");
 
 const {
     getAllCourses,
@@ -17,7 +18,7 @@ const {
 router.route("/").get(advancedResults(Course, {
     path: "bootcamp",
     select: "name description"
-}), getAllCourses).post(addCourse);
-router.route("/:id").get(getCourse).put(updateCourse).delete(deleteCourse);
+}), getAllCourses).post(protect, addCourse);
+router.route("/:id").get(getCourse).put(protect, updateCourse).delete(protect, deleteCourse);
 
 module.exports = router;
