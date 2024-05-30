@@ -36,7 +36,6 @@ const UserSchema = mongoose.Schema({
 // Encrypt password using bryptjs
 
 UserSchema.pre("save", async function(next){
-    console.log("this: ", this)
     if(!this.isModified("password")){
         next();
     }

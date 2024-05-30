@@ -88,7 +88,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
     const user = await User.findOne({resetPasswordToken: req.params.resettoken, resetPasswordExpire: {$gt: Date.now()}});
 
-    console.log("reset token: ", req.params.resettoken, " user: ", user)
     if(!user) {
         return next(new ErrorResponse("Invalid token"), 400)
     }
@@ -164,7 +163,6 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 // @route: POST /api/v1/auth/updatepassword
 // @access: Private
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-    console.log("req.user.id: ", req.user.id)
     const user = await User.findById(req.user.id).select("+password");
 
     const isPasswordMatched = await user.matchPassword(req.body.currentPassword);
@@ -176,6 +174,6 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
     user.password = req.body.newPassword;
 
     await user.save();
-    
+
     sendTokenResponse(user, 200, res);
 });

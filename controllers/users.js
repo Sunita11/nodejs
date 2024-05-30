@@ -8,8 +8,6 @@ const User = require("../models/User");
 // @route: GET /api/v1/auth/users 
 // @access: Private/Admin
 exports.getUsers = asyncHandler(async (req, res, next) => {
-    console.log("get users: ", res)
-
     res.status(200).json(res.advancedResults)
 });
 
